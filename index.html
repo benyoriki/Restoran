@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="id" data-default-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>QR Menu & Order — Digital Restaurant Ordering System</title>
+  <meta name="description" content="Sistem QR Menu & Order untuk restoran, kafe, dan warung makan di Indonesia: pelanggan memesan dari meja, dapur mengelola pesanan, penjualan terpantau dalam satu dashboard.">
+  <meta name="author" content="Riki Hermawan (@benyoriki)">
+  <meta name="theme-color" content="#10b981">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="QR Menu & Order">
+  <meta property="og:title" content="QR Menu & Order — Restoran Lebih Modern, Pesanan Lebih Praktis">
+  <meta property="og:description" content="Pelanggan scan QR di meja, pilih menu, kirim pesanan. Dapur dan kasir mengelola semuanya dari satu dashboard.">
+  <!-- Ganti dengan URL absolut setelah dipublikasikan, mis. https://username.github.io/qr-menu-order/og-image.png -->
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>try{var t=localStorage.getItem('qmo:theme');document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body class="land">
+
+<header class="l-nav" id="nav">
+  <div class="wrap">
+    <a class="brand-l" href="#beranda"><span class="brand-mark"><i data-lucide="qr-code"></i></span>Menu<span>&amp;</span>Order</a>
+    <nav class="l-links" aria-label="Navigasi utama">
+      <a href="#beranda" class="on">Beranda</a><a href="#fitur">Fitur</a><a href="#demo">Demo</a><a href="#harga">Harga</a><a href="#kontak">Kontak</a>
+    </nav>
+    <div class="l-tools">
+      <button class="icon-btn" data-theme-toggle></button>
+      <a class="btn btn-primary" href="login.html"><i data-lucide="log-in"></i>Masuk Admin</a>
+      <button class="icon-btn l-burger" id="burger" aria-label="Buka menu"><i data-lucide="menu"></i></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="l-hero" id="beranda">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="hero-badge"><i data-lucide="circle-dot"></i>Sistem Pemesanan Restoran Modern</span>
+      <h1 class="hero-title">Restoran Lebih Modern, <em>Pesanan Lebih Praktis.</em></h1>
+      <p class="hero-sub">Sistem QR Menu &amp; Order untuk memudahkan pelanggan memesan dari meja, membantu dapur mengelola pesanan, dan memantau penjualan dalam satu dashboard.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="login.html"><i data-lucide="play"></i>Coba Demo</a>
+        <a class="btn btn-dark" href="menu.html?table=MEJA-01"><i data-lucide="utensils-crossed"></i>Lihat Menu Digital</a>
+        <a class="btn btn-wa" id="waHero" href="#kontak" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Hubungi Kami</a>
+      </div>
+      <div class="hero-feats">
+        <div class="hf"><i data-lucide="armchair"></i><span><b>Pesan dari Meja</b>Lebih Cepat</span></div>
+        <div class="hf"><i data-lucide="scan-line"></i><span><b>Tanpa Aplikasi</b>Cukup Scan QR</span></div>
+        <div class="hf"><i data-lucide="layout-dashboard"></i><span><b>Dashboard Lengkap</b>Penjualan &amp; Laporan</span></div>
+        <div class="hf"><i data-lucide="store"></i><span><b>Cocok untuk</b>Restoran, Kafe, Food Court</span></div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="mock-laptop"><div class="ml-side"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ml-main"><div class="ml-cards" id="mlCards"></div><div class="ml-bars" id="mlBars"></div></div></div>
+      <div class="mock-phone"><div class="mp-in"><div class="mp-top"><span id="mpName">Menu</span><span>🛒</span></div><div class="mp-pills"><i>Semua</i><i>Ayam</i><i>Nasi</i><i>Minuman</i></div><div class="mp-grid" id="mpGrid"></div></div></div>
+      <div class="mock-qr"><img id="mqImg" alt="Contoh QR Code meja"><b>SCAN QR · PESAN DARI MEJA</b><span>MEJA 01</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section" id="fitur">
+  <div class="wrap">
+    <div class="l-head reveal"><span class="eyebrow">Fitur Unggulan</span><h2>Semua yang dibutuhkan restoran Anda</h2><p>Dari QR di meja sampai laporan keuangan — dibuat ringan, cepat, dan mudah dipakai staf.</p></div>
+    <div class="feat-grid">
+      <div class="feat reveal"><div class="fi"><i data-lucide="qr-code"></i></div><h3>Menu digital dengan QR Code</h3><p>Setiap meja punya QR sendiri yang membuka menu dengan nomor meja otomatis.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="smartphone"></i></div><h3>Pesan langsung dari HP</h3><p>Pilih menu, catatan, dan jumlah — kirim pesanan tanpa harus memanggil pelayan.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="chef-hat"></i></div><h3>Dashboard pesanan dapur</h3><p>Papan kartu per status, peringatan pesanan lama, bunyi notifikasi, dan layar penuh.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="utensils-crossed"></i></div><h3>Kelola menu, harga, foto, stok</h3><p>CRUD lengkap, foto otomatis diperkecil, batas stok minimum, dan label habis.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="square-pen"></i></div><h3>Pesanan manual kasir</h3><p>Kasir input pesanan, terapkan promo, catat pembayaran, dan cetak struk.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="wallet"></i></div><h3>Laporan transaksi &amp; keuangan</h3><p>Kas masuk/keluar, saldo, estimasi laba — pendapatan, arus kas, dan laba dipisahkan.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="armchair"></i></div><h3>Pengelolaan meja</h3><p>Tambah, aktifkan, nonaktifkan meja; unduh dan cetak QR setiap meja.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="chart-column"></i></div><h3>Laporan penjualan</h3><p>Menu terlaris, per kategori, per jam, harian sampai tahunan, ekspor CSV &amp; cetak.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="badge-percent"></i></div><h3>Promo &amp; diskon</h3><p>Persen, nominal, harga khusus, periode, minimal belanja, dan label promo.</p></div>
+      <div class="feat reveal"><div class="fi"><i data-lucide="moon"></i></div><h3>Mode terang &amp; gelap</h3><p>Tema tersimpan otomatis, nyaman dipakai siang maupun malam di dapur.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section alt" id="cara">
+  <div class="wrap">
+    <div class="l-head reveal"><span class="eyebrow">Cara Kerja</span><h2>Dari scan sampai bayar, tujuh langkah</h2></div>
+    <div class="steps">
+      <div class="step reveal"><h3>Scan QR di meja</h3><p>Pelanggan memindai QR Code yang ada di meja.</p></div>
+      <div class="step reveal"><h3>Menu terbuka di HP</h3><p>Menu restoran tampil dengan nomor meja otomatis.</p></div>
+      <div class="step reveal"><h3>Pilih makanan</h3><p>Pelanggan memilih makanan dan jumlahnya.</p></div>
+      <div class="step reveal"><h3>Kirim pesanan</h3><p>Pesanan dikirim dan nomor pesanan ditampilkan.</p></div>
+      <div class="step reveal"><h3>Masuk ke sistem</h3><p>Pesanan muncul di sistem restoran setelah backend bersama terhubung.*</p></div>
+      <div class="step reveal"><h3>Dapur memproses</h3><p>Dapur menerima, memasak, dan menandai siap.</p></div>
+      <div class="step reveal"><h3>Kasir menyelesaikan</h3><p>Kasir mencatat pembayaran dan mencetak struk.</p></div>
+    </div>
+    <p class="price-note">* Pada versi prototype (LocalStorage), sinkronisasi antar-perangkat belum aktif. Sinkronisasi real-time disiapkan lewat integrasi Firebase.</p>
+  </div>
+</section>
+
+<section class="l-section" id="demo">
+  <div class="wrap demo-grid">
+    <div class="phone-frame reveal"><iframe id="demoFrame" title="Demo menu digital" loading="lazy" src="menu.html?table=MEJA-01"></iframe></div>
+    <div class="demo-copy reveal">
+      <span class="eyebrow" style="color:var(--primary-600);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.1em">Demo Menu Digital</span>
+      <h3>Coba langsung seperti pelanggan Anda</h3>
+      <p>Ini adalah menu sungguhan, bukan gambar. Tambah item, isi catatan, dan kirim pesanan — lalu buka Dashboard Dapur dan Admin untuk melihat pesanannya (pada browser yang sama).</p>
+      <ul class="demo-list">
+        <li><i data-lucide="circle-check"></i>Kategori, pencarian, promo, dan label menu habis</li>
+        <li><i data-lucide="circle-check"></i>Keranjang dengan catatan item &amp; catatan alergi</li>
+        <li><i data-lucide="circle-check"></i>Nomor pesanan unik dan pelacakan status</li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="menu.html?table=MEJA-01" target="_blank" rel="noopener"><i data-lucide="external-link"></i>Buka Menu Digital</a>
+        <a class="btn btn-ghost" href="login.html"><i data-lucide="layout-dashboard"></i>Masuk Admin / Dapur</a>
+        <a class="btn btn-ghost" id="mapsBtn" href="#" target="_blank" rel="noopener"><i data-lucide="map-pin"></i>Lokasi Referensi (Google Maps)</a>
+      </div>
+      <p class="muted small" style="margin-top:14px">Ayam Kampung Sambal Merintih (Citeureup, Bogor) hanya dipakai sebagai <b>referensi data contoh</b>. Tidak ada klaim kerja sama atau persetujuan dari pemilik; nama, harga, logo, dan foto dapat diganti di dashboard admin.</p>
+    </div>
+  </div>
+</section>
+
+<section class="l-section alt" id="preview">
+  <div class="wrap">
+    <div class="l-head reveal"><span class="eyebrow">Preview Dashboard</span><h2>Satu dashboard untuk admin dan dapur</h2><p>Angka pada preview dihitung dari data contoh yang tersimpan di browser Anda.</p></div>
+    <div class="preview-grid">
+      <div class="preview reveal"><h3><i data-lucide="layout-dashboard"></i>Dashboard Admin</h3><p>Penjualan, pesanan, grafik, dan menu terlaris dalam sekali pandang.</p><div class="pv-admin"><div class="pv-side"><i></i><i></i><i></i><i></i><i></i></div><div class="pv-main"><div class="pv-stats" id="pvStats"></div><div class="pv-chart" id="pvChart"></div></div></div><div class="btn-row" style="margin-top:14px"><a class="btn btn-soft btn-sm" href="login.html?next=admin.html">Buka dashboard admin</a></div></div>
+      <div class="preview reveal"><h3><i data-lucide="chef-hat"></i>Dashboard Dapur</h3><p>Kartu pesanan berwarna per status dengan tombol tindakan yang jelas.</p><div class="pv-kitchen" id="pvKitchen"></div><div class="btn-row" style="margin-top:14px"><a class="btn btn-soft btn-sm" href="login.html?next=kitchen.html">Buka dashboard dapur</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section" id="manfaat">
+  <div class="wrap">
+    <div class="l-head reveal"><span class="eyebrow">Manfaat untuk Restoran</span><h2>Lebih rapi, lebih cepat, lebih terukur</h2></div>
+    <div class="benefit-grid">
+      <div class="benefit reveal"><div class="fi"><i data-lucide="timer"></i></div><div><h3>Pelayanan lebih cepat</h3><p>Pelanggan tak perlu menunggu pelayan untuk memesan.</p></div></div>
+      <div class="benefit reveal"><div class="fi"><i data-lucide="check-check"></i></div><div><h3>Pesanan lebih akurat</h3><p>Catatan tertulis langsung ke dapur, mengurangi salah dengar.</p></div></div>
+      <div class="benefit reveal"><div class="fi"><i data-lucide="users"></i></div><div><h3>Staf lebih efisien</h3><p>Pelayan fokus melayani, dapur punya antrean yang jelas.</p></div></div>
+      <div class="benefit reveal"><div class="fi"><i data-lucide="boxes"></i></div><div><h3>Stok terkendali</h3><p>Menu habis otomatis tidak bisa dipesan; peringatan stok menipis.</p></div></div>
+      <div class="benefit reveal"><div class="fi"><i data-lucide="landmark"></i></div><div><h3>Keuangan transparan</h3><p>Penjualan, kas, dan estimasi laba dipisahkan agar tidak keliru.</p></div></div>
+      <div class="benefit reveal"><div class="fi"><i data-lucide="leaf"></i></div><div><h3>Hemat cetak menu</h3><p>Ganti harga dan foto kapan saja tanpa mencetak ulang.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section alt" id="harga">
+  <div class="wrap">
+    <div class="l-head reveal"><span class="eyebrow">Paket Berlangganan</span><h2>Pilih paket sesuai skala usaha</h2><p>Harga dan batas paket dapat diedit di dashboard (Pengaturan Sistem).</p></div>
+    <div class="price-grid" id="plans"></div>
+    <p class="price-note">Konfigurasi paket di atas hanya contoh. Pembayaran langganan dan isolasi data multi-restoran (multi-tenant) belum tersedia pada prototype ini dan memerlukan backend dengan aturan keamanan.</p>
+  </div>
+</section>
+
+<section class="l-section" id="faq">
+  <div class="wrap">
+    <div class="l-head reveal"><span class="eyebrow">FAQ</span><h2>Pertanyaan yang sering diajukan</h2></div>
+    <div class="faq reveal">
+      <details><summary>Apakah pelanggan harus memasang aplikasi?</summary><p>Tidak. Pelanggan cukup memindai QR Code di meja dengan kamera HP; menu terbuka di browser.</p></details>
+      <details><summary>Apakah pesanan dari HP pelanggan langsung muncul di dapur?</summary><p>Pada prototype ini data disimpan di browser (LocalStorage), jadi hanya muncul di browser yang sama (mode simulasi antar-tab). Untuk dipakai nyata di banyak perangkat, aplikasi perlu dihubungkan ke Firebase — struktur kode sudah disiapkan untuk itu.</p></details>
+      <details><summary>Apakah pembayaran QRIS terintegrasi otomatis?</summary><p>Belum. Metode pembayaran (tunai, transfer, QRIS, lainnya) saat ini dicatat manual oleh kasir. Integrasi payment gateway dapat ditambahkan pada tahap berikutnya.</p></details>
+      <details><summary>Apakah harga, foto, dan nama restoran bisa diganti?</summary><p>Ya. Semua data contoh (termasuk nama, logo, harga, dan foto) dapat diedit lewat dashboard admin.</p></details>
+      <details><summary>Bagaimana cara memasang QR di meja?</summary><p>Di dashboard buka Manajemen Meja atau QR Code, atur Base URL ke alamat website Anda, lalu unduh PNG atau cetak QR tiap meja.</p></details>
+      <details><summary>Apakah login admin sudah aman?</summary><p>Login pada prototype hanya simulasi demo di browser dan tidak aman untuk produksi. Versi produksi memakai Firebase Authentication dan aturan keamanan database berbasis role.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="l-section" id="kontak" style="padding-top:0">
+  <div class="wrap">
+    <div class="l-cta reveal"><h2>Siap membuat restoran Anda lebih modern?</h2><p>Hubungi kami untuk konsultasi, demo langsung, dan penyesuaian dengan menu serta brand restoran Anda.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-light" id="waCta" href="#" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Konsultasi via WhatsApp</a><a class="btn btn-dark" href="login.html"><i data-lucide="play"></i>Coba Demo</a></div></div>
+  </div>
+</section>
+</main>
+
+<footer class="l-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div><a class="brand-l" href="#beranda"><span class="brand-mark"><i data-lucide="qr-code"></i></span>Menu<span>&amp;</span>Order</a><p style="margin-top:12px;max-width:340px">Digital Restaurant Ordering System untuk restoran, kafe, food court, dan warung makan di Indonesia.</p></div>
+      <div><h4>Navigasi</h4><a href="#fitur">Fitur</a><a href="#demo">Demo</a><a href="#harga">Harga</a><a href="#faq">FAQ</a></div>
+      <div><h4>Aplikasi</h4><a href="menu.html?table=MEJA-01">Menu Digital</a><a href="login.html">Admin &amp; Kasir</a><a href="login.html?next=kitchen.html">Dashboard Dapur</a></div>
+    </div>
+    <div class="f-bottom"><span>© <span id="yr"></span> QR Menu &amp; Order · Developed by <a style="display:inline" href="https://benyoriki.com" target="_blank" rel="noopener">@benyoriki</a></span><a style="display:inline" href="https://benyoriki.com" target="_blank" rel="noopener">https://benyoriki.com</a></div>
+  </div>
+</footer>
+<a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="Chat WhatsApp"><i data-lucide="message-circle"></i></a>
+
+<script src="vendor/lucide.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="storage.js"></script>
+<script src="app.js"></script>
+<script src="menu.js"></script>
+<script src="orders.js"></script>
+<script src="finance.js"></script>
+<script src="reports.js"></script>
+<script src="qr.js"></script>
+<script>
+(function () {
+  'use strict';
+  var App = window.App, esc = App.esc, rp = App.rp, $ = App.$;
+  var s = Store.getSettings();
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* WhatsApp konsultasi: isi nomor di Store.defaultSettings().developer.wa (storage.js) atau lewat Pengaturan.
+     Bila kosong, tombol membuka WhatsApp tanpa nomor tujuan. */
+  var wa = s.developer && s.developer.wa ? App.waLink(s.developer.wa, 'Halo, saya ingin konsultasi QR Menu & Order') : 'https://wa.me/?text=' + encodeURIComponent('Halo, saya ingin konsultasi QR Menu & Order');
+  ['waHero', 'waCta', 'waFloat'].forEach(function (id) { document.getElementById(id).href = wa; });
+  document.getElementById('mapsBtn').href = s.restaurant.maps;
+
+  /* mockup hero dari data nyata */
+  var menus = Menu.visible().filter(function (m) { return !Menu.isSoldOut(m); });
+  document.getElementById('mpName').textContent = s.restaurant.name.split(' ').slice(0, 3).join(' ');
+  document.getElementById('mpGrid').innerHTML = menus.slice(0, 4).map(function (m) {
+    return '<div class="mp-card"><img src="' + esc(App.foodImg(m)) + '" alt=""><div>' + esc(m.name) + '<em>' + rp(Menu.priceInfo(m).final) + '</em></div></div>';
+  }).join('');
+  try { document.getElementById('mqImg').src = QR.dataUrl(App.tableUrl('MEJA-01')); } catch (e) { console.warn(e); }
+  var fin = Finance.summary(App.Range.compute('7d'));
+  document.getElementById('mlCards').innerHTML = [['Penjualan', App.compact(fin.orderValue)], ['Pesanan', fin.orderCount], ['Dibayar', fin.paidCount], ['Kas', App.compact(fin.balanceAll)]].map(function (c) { return '<div><small>' + c[0] + '</small><b>' + c[1] + '</b></div>'; }).join('');
+  var days = Reports.byPeriod(Store.getOrders().filter(function (o) { return o.status !== 'cancelled'; }), 'day', App.Range.compute('7d'));
+  var mx = Math.max.apply(null, days.map(function (d) { return d.sales; }).concat([1]));
+  document.getElementById('mlBars').innerHTML = days.map(function (d) { return '<i style="height:' + Math.max(6, d.sales * 100 / mx) + '%"></i>'; }).join('');
+
+  /* preview admin */
+  var m30 = Finance.summary(App.Range.compute('month'));
+  document.getElementById('pvStats').innerHTML = [['Total Penjualan', rp(m30.orderValue)], ['Total Pesanan', m30.orderCount], ['Saldo Kas', rp(m30.balanceAll)]].map(function (c) { return '<div><small>' + c[0] + '</small><b>' + c[1] + '</b></div>'; }).join('');
+  document.getElementById('pvChart').innerHTML = App.Charts.bars(days.map(function (d) { return { label: d.label, value: d.sales }; }), { height: 150, fmt: rp, label: 'Grafik penjualan 7 hari' });
+
+  /* preview dapur */
+  var os = Store.getOrders();
+  var cols = [['Baru', ['pending']], ['Diproses', ['confirmed', 'cooking']], ['Siap', ['ready', 'serving']], ['Selesai', ['done']]];
+  document.getElementById('pvKitchen').innerHTML = cols.map(function (c) {
+    var list = os.filter(function (o) { return c[1].indexOf(o.status) >= 0 && o.createdAt > Date.now() - 86400000; }).slice(0, 2);
+    return '<div class="pv-kcol"><h4>' + c[0] + '</h4>' + (list.map(function (o) { return '<div class="pv-kcard"><b>' + esc(o.number) + '</b><small>' + esc(o.tableName) + ' · ' + esc(o.items[0].qty + 'x ' + o.items[0].name) + '</small></div>'; }).join('') || '<div class="pv-kcard"><small>—</small></div>') + '</div>';
+  }).join('');
+
+  /* paket */
+  document.getElementById('plans').innerHTML = s.plans.map(function (p) {
+    return '<div class="price-card reveal' + (p.featured ? ' featured' : '') + '">' + (p.featured ? '<span class="ribbon">Paling Populer</span>' : '') + '<h3>' + esc(p.name) + '</h3><div class="amt">' + rp(p.price) + ' <small>/ ' + esc(p.period) + '</small></div>' +
+      '<div class="limits"><span>' + p.maxTables + ' meja</span><span>' + p.maxMenus + ' menu</span><span>' + p.maxUsers + ' pengguna</span></div><ul>' + p.features.map(function (f) { return '<li><i data-lucide="check"></i>' + esc(f) + '</li>'; }).join('') + '</ul>' +
+      '<a class="btn ' + (p.featured ? 'btn-primary' : 'btn-outline') + ' btn-block" href="' + esc(wa) + '" target="_blank" rel="noopener">Tanya Paket ' + esc(p.name) + '</a></div>';
+  }).join('');
+
+  /* interaksi: nav, burger, scroll spy, reveal */
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('solid', window.scrollY > 24); }
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  document.getElementById('burger').addEventListener('click', function () { nav.classList.toggle('open'); });
+  nav.querySelectorAll('.l-links a').forEach(function (a) { a.addEventListener('click', function () { nav.classList.remove('open'); }); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    var links = Array.prototype.slice.call(nav.querySelectorAll('.l-links a')), secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+    var so = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var i = secs.indexOf(e.target); links.forEach(function (l, k) { l.classList.toggle('on', k === i); }); } }); }, { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach(function (x) { if (x) so.observe(x); });
+  } else document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  App.refreshIcons();
+})();
+</script>
+</body>
+</html>

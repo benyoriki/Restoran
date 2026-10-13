@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id" data-default-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Masuk — QR Menu & Order</title>
+  <meta name="description" content="Masuk ke dashboard admin, kasir, atau dapur.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#10b981">
+  <meta property="og:title" content="Masuk — QR Menu & Order"><meta property="og:description" content="Masuk ke dashboard admin, kasir, atau dapur."><meta property="og:image" content="og-image.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>try{var t=localStorage.getItem('qmo:theme');document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body class="login-body">
+<noscript><p style="padding:24px;font-family:sans-serif">Aplikasi ini membutuhkan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
+<main class="login-card">
+  <aside class="login-aside">
+    <a class="brand-l" href="index.html"><span class="brand-mark"><i data-lucide="qr-code"></i></span>Menu<span>&amp;</span>Order</a>
+    <div><h2>Kelola restoran dari satu dashboard.</h2><p>Pesanan, dapur, menu, meja, dan keuangan — semua terhubung.</p></div>
+    <ul><li><i data-lucide="check-circle-2"></i>Owner, Admin, Kasir, Staf Dapur</li><li><i data-lucide="check-circle-2"></i>Hak akses sesuai peran</li><li><i data-lucide="check-circle-2"></i>Siap dihubungkan ke Firebase Authentication</li></ul>
+  </aside>
+  <section class="login-form">
+    <div><h1>Masuk</h1><p class="muted">Gunakan akun demo di bawah atau isi username dan PIN.</p></div>
+    <div class="notice warn"><i data-lucide="shield-alert"></i><span><b>Mode demo.</b> Login ini hanya simulasi di browser dan <b>tidak aman untuk produksi</b>. Versi produksi memakai Firebase Authentication.</span></div>
+    <div class="demo-accounts" id="demoAccounts"></div>
+    <form id="loginForm" novalidate>
+      <div class="field"><label for="u">Username</label><input id="u" name="u" autocomplete="username" autocapitalize="none" required placeholder="owner / admin / kasir / dapur"></div>
+      <div class="field" style="margin-top:12px"><label for="p">PIN</label><div class="pw-wrap"><input id="p" name="p" type="password" inputmode="numeric" autocomplete="current-password" required placeholder="PIN"><button type="button" class="icon-btn" id="showPw" aria-label="Tampilkan PIN"><i data-lucide="eye"></i></button></div></div>
+      <div class="form-error" id="err" role="alert" hidden style="margin-top:12px"></div>
+      <button class="btn btn-primary btn-block btn-lg" id="go" type="submit" style="margin-top:16px"><i data-lucide="log-in"></i>Masuk</button>
+    </form>
+    <div class="btn-row" style="justify-content:space-between"><a href="index.html">&larr; Kembali ke Home</a><button class="icon-btn" data-theme-toggle></button></div>
+  </section>
+</main>
+<script src="vendor/lucide.min.js"></script>
+<script src="storage.js"></script>
+<script src="app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var next = new URLSearchParams(location.search).get('next') || '';
+  function safeNext(role) {
+    // hanya izinkan halaman internal sederhana (cegah open redirect)
+    if (/^(admin|kitchen)\.html(#[\w\/\-]*)?$/.test(next)) return next;
+    return App.Auth.home(role);
+  }
+  var s = App.Auth.current();
+  if (s) { location.replace(safeNext(s.role)); return; }
+  var users = Store.getUsers().filter(function (u) { return u.active !== false; });
+  var box = document.getElementById('demoAccounts');
+  box.innerHTML = users.map(function (u) { return '<button type="button" data-u="' + App.esc(u.username) + '"><b>' + App.esc(App.Auth.roleName(u.role)) + '</b><small>' + App.esc(u.username) + ' · PIN demo 1234</small></button>'; }).join('');
+  box.addEventListener('click', function (e) { var b = e.target.closest('[data-u]'); if (!b) return; document.getElementById('u').value = b.getAttribute('data-u'); document.getElementById('p').value = '1234'; doLogin(); });
+  document.getElementById('showPw').addEventListener('click', function () { var p = document.getElementById('p'); p.type = p.type === 'password' ? 'text' : 'password'; });
+  document.getElementById('loginForm').addEventListener('submit', function (e) { e.preventDefault(); doLogin(); });
+  function doLogin() {
+    var err = document.getElementById('err'); err.hidden = true;
+    var u = document.getElementById('u').value, p = document.getElementById('p').value;
+    if (!u.trim() || !p) { err.textContent = 'Username dan PIN wajib diisi.'; err.hidden = false; return; }
+    try { var sess = App.Auth.login(u, p); location.href = safeNext(sess.role); }
+    catch (ex) { err.textContent = ex.message; err.hidden = false; }
+  }
+});
+</script>
+</body>
+</html>
