@@ -81,3 +81,8 @@
 @media (max-width: 1280px) and (min-width: 721px) { .stat-grid, .stat-grid.three, .stat-grid.four, .stat-grid.five { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
 @media (max-width: 1100px) { .k-board { align-content: start; } }
 @media (max-width: 720px) { .login-body { place-items: start center; padding-top: 6vh; } }
+
+/* tombol kembali / logout */
+.tb-logout, .k-back, .k-logout { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+@media (max-width: 720px) { .tb-logout span { display: none; } .tb-logout { padding: 0 12px; min-width: 42px; } .k-back span, .k-logout span { display: none; } .k-title h1 { font-size: 16px; } }
+@media (max-width: 720px) { .topbar > a.icon-btn { display: none; } .topbar .tb-title { min-width: 0; flex: 1; } .topbar .tb-title h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tb-actions .btn { padding: 0 10px; } }

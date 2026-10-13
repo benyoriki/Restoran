@@ -64,7 +64,7 @@
       var u = Shell.session;
       var bottom = [['dashboard', 'layout-dashboard', 'Beranda'], ['orders', 'receipt', 'Pesanan'], ['manual', 'square-pen', 'Kasir'], ['menus', 'utensils-crossed', 'Menu']].filter(function (b) { return allowed(b[0]); });
       Shell.root.innerHTML = '<div class="admin' + (localStorage.getItem('qmo:sbc') === '1' ? ' collapsed' : '') + '" id="adminShell"><aside class="sidebar" id="sidebar" aria-label="Sidebar">' + Shell.sidebarHtml() + '</aside><div class="backdrop" data-act="close-drawer"></div>' +
-        '<div class="admin-main"><header class="topbar"><button class="icon-btn" data-act="toggle-sb" aria-label="Buka/tutup sidebar">' + ic('panel-left') + '</button><div class="tb-title"><h1 id="pageTitle">Dashboard</h1><p id="pageSub"></p></div><div class="tb-actions" id="viewActions"></div><button class="icon-btn" data-theme-toggle></button><a class="icon-btn" href="menu.html?table=MEJA-01" target="_blank" rel="noopener" title="Lihat menu pelanggan" aria-label="Lihat menu pelanggan">' + ic('smartphone') + '</a></header>' +
+        '<div class="admin-main"><header class="topbar"><button class="icon-btn" data-act="toggle-sb" aria-label="Buka/tutup sidebar">' + ic('panel-left') + '</button><button class="icon-btn" id="tbBack" data-act="go-home" hidden title="Kembali ke Dashboard" aria-label="Kembali ke Dashboard">' + ic('arrow-left') + '</button><div class="tb-title"><h1 id="pageTitle">Dashboard</h1><p id="pageSub"></p></div><div class="tb-actions" id="viewActions"></div><button class="icon-btn" data-theme-toggle></button><a class="icon-btn" href="menu.html?table=MEJA-01" target="_blank" rel="noopener" title="Lihat menu pelanggan" aria-label="Lihat menu pelanggan">' + ic('smartphone') + '</a><a class="icon-btn" href="index.html" title="Ke Beranda website" aria-label="Ke Beranda website">' + ic('house') + '</a><button class="btn btn-soft btn-sm tb-logout" data-act="logout" title="Keluar" aria-label="Logout">' + ic('log-out') + '<span>Keluar</span></button></header>' +
         '<div id="sampleBanner"></div><main id="view" class="view" tabindex="-1"></main></div>' +
         '<nav class="admin-bottom" aria-label="Navigasi cepat">' + bottom.map(function (b) { return '<a href="#/' + b[0] + '" data-route="' + b[0] + '">' + ic(b[1]) + '<span>' + b[2] + '</span></a>'; }).join('') + '<button data-act="open-drawer">' + ic('menu') + '<span>Lainnya</span></button></nav></div>';
       Shell.body = $('#view'); App.Theme.sync(); App.refreshIcons(); Shell.updateBadges(); Shell.sampleBanner();
@@ -93,6 +93,7 @@
           var act = b.getAttribute('data-act');
           if (act === 'group') { var g = b.getAttribute('data-g'), grp = b.closest('.nav-group'), open = !grp.classList.contains('open'); grp.classList.toggle('open', open); Shell.collapsedGroups[g] = !open; b.setAttribute('aria-expanded', open); try { localStorage.setItem('qmo:nav', JSON.stringify(Shell.collapsedGroups)); } catch (x) {} return; }
           if (act === 'toggle-sb') { if (window.matchMedia('(min-width:1024px)').matches) { shell.classList.toggle('collapsed'); try { localStorage.setItem('qmo:sbc', shell.classList.contains('collapsed') ? '1' : '0'); } catch (x) {} } else shell.classList.toggle('drawer-open'); return; }
+          if (act === 'go-home') { location.hash = '#/dashboard'; return; }
           if (act === 'open-drawer') { shell.classList.add('drawer-open'); return; }
           if (act === 'close-drawer') { shell.classList.remove('drawer-open'); return; }
           if (act === 'logout') { App.confirm({ title: 'Keluar?', message: 'Anda akan keluar dari dashboard.', confirmText: 'Logout' }).then(function (ok) { if (ok) { App.Auth.logout(); location.href = 'login.html'; } }); return; }
@@ -115,7 +116,7 @@
     show: function (id, fresh) {
       var v = Admin.views[id];
       if (!allowed(id)) { App.toast('Anda tidak memiliki izin untuk halaman ini.', 'warn'); if (id !== 'dashboard') return Shell.navigate('dashboard'); return; }
-      Shell.cur = id; $('#pageTitle').textContent = v.title; $('#pageSub').textContent = v.sub || '';
+      Shell.cur = id; var tbb = $('#tbBack'); if (tbb) tbb.hidden = (id === 'dashboard'); $('#pageTitle').textContent = v.title; $('#pageSub').textContent = v.sub || '';
       document.title = v.title + ' — QR Menu & Order';
       var scroll = fresh ? 0 : window.scrollY;
       var ctx = { fresh: fresh, rerender: function (quiet) { Shell.show(id, false); }, actions: function (html) { $('#viewActions').innerHTML = html || ''; App.refreshIcons(); }, navigate: Shell.navigate, refreshShell: Shell.refresh };

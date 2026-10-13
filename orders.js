@@ -494,7 +494,7 @@
     can: function (perm) { return App.Auth.can(perm) || App.Auth.can('kitchen'); },
     shell: function () {
       var u = App.Auth.current(), fs = !!document.fullscreenElement, st = Kitchen.st;
-      var back = u && u.role !== 'kitchen' ? '<a class="icon-btn" href="admin.html" title="Kembali ke admin" aria-label="Kembali ke admin">' + ic('layout-dashboard') + '</a>' : '';
+      var back = (u && u.role !== 'kitchen' ? '<a class="btn btn-soft btn-sm k-back" href="admin.html" title="Kembali ke admin" aria-label="Kembali ke admin">' + ic('arrow-left') + '<span>Admin</span></a>' : '') + '<button class="btn btn-soft btn-sm k-logout" data-act="logout" title="Keluar" aria-label="Logout">' + ic('log-out') + '<span>Keluar</span></button>';
       Kitchen.root.innerHTML = '<div class="k-shell"><header class="k-head"><div class="k-title"><span class="k-logo">' + ic('chef-hat') + '</span><div><h1>Dashboard Dapur</h1><small>' + esc(Store.getSettings().restaurant.name) + '</small></div></div>' +
         '<div class="k-tools"><div class="k-filters"><div class="search-in sm">' + ic('search') + '<input id="kq" type="search" placeholder="Cari meja / no. pesanan" value="' + esc(st.q) + '" aria-label="Cari pesanan"></div><select id="ksrc" aria-label="Sumber pesanan"><option value="">Semua sumber</option><option value="qr"' + (st.source === 'qr' ? ' selected' : '') + '>QR</option><option value="manual"' + (st.source === 'manual' ? ' selected' : '') + '>Manual</option></select></div>' +
         '<button class="icon-btn' + (st.sound ? ' on' : '') + '" data-act="sound" title="Bunyi notifikasi" aria-pressed="' + st.sound + '" aria-label="Bunyi notifikasi">' + ic(st.sound ? 'volume-2' : 'volume-x') + '</button>' +
@@ -510,6 +510,7 @@
       root.querySelector('.k-shell').addEventListener('click', function (e) {
         var b = e.target.closest('[data-act]'); if (!b) return;
         var act = b.getAttribute('data-act'), id = b.getAttribute('data-id');
+        if (act === 'logout') { App.confirm({ title: 'Keluar?', message: 'Anda akan keluar dari dashboard dapur.', confirmText: 'Logout' }).then(function (ok) { if (ok) { App.Auth.logout(); location.href = 'login.html'; } }); return; }
         if (act === 'sound') {
           Kitchen.st.sound = !Kitchen.st.sound; try { localStorage.setItem('qmo:kitchen', JSON.stringify({ sound: Kitchen.st.sound })); } catch (x) {}
           if (Kitchen.st.sound) { App.Sound.unlock(); App.Sound.beep(); } Kitchen.shell();
