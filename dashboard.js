@@ -9,7 +9,7 @@
   var NAV = [
     { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
     { group: 'orders', label: 'Pesanan', icon: 'receipt', children: [['orders', 'Manajemen Pesanan'], ['orders-qr', 'Pesanan QR'], ['manual', 'Pesanan Manual']] },
-    { id: 'kitchen', label: 'Dashboard Dapur', icon: 'chef-hat', href: 'kitchen.html', perm: 'kitchen' },
+    { id: 'kitchen', label: 'Papan Pesanan', icon: 'chef-hat', href: 'kitchen.html', perm: 'kitchen' },
     { group: 'menu', label: 'Menu Makanan', icon: 'utensils-crossed', children: [['menus', 'Menu Makanan'], ['categories', 'Kategori Menu'], ['stock', 'Manajemen Stok'], ['promos', 'Promo dan Diskon']] },
     { group: 'tables', label: 'Meja & QR', icon: 'armchair', children: [['tables', 'Manajemen Meja'], ['qr', 'QR Code']] },
     { group: 'cash', label: 'Keuangan', icon: 'wallet', children: [['cash-in', 'Kas Masuk'], ['cash-out', 'Kas Keluar'], ['transactions', 'Riwayat Transaksi']] },
@@ -158,7 +158,7 @@
         return '<div class="stat"><span class="stat-ic ' + color + '">' + ic(icon) + '</span><div><small>' + label + '</small><b>' + val + '</b>' + (delta ? '<em class="' + (delta.up ? 'up' : 'down') + '">' + ic(delta.up ? 'trending-up' : 'trending-down') + delta.t + ' vs periode lalu</em>' : (sub ? '<em>' + sub + '</em>' : '')) + '</div></div>';
       };
       var row1 = '<div class="stat-grid five">' + stat('banknote', 'emerald', 'Total Penjualan', rp(s.orderValue), pct(s.orderValue, sp.orderValue)) + stat('receipt', 'green', 'Total Pesanan', s.orderCount, pct(s.orderCount, sp.orderCount)) +
-        stat('clock', 'amber', 'Menunggu', s.pending, null, 'perlu diterima dapur') + stat('flame', 'blue', 'Diproses', s.processing + s.ready, null, 'dimasak / siap saji') + stat('circle-check', 'emerald', 'Selesai', s.done) + '</div>';
+        stat('clock', 'amber', 'Menunggu', s.pending, null, 'perlu diterima kasir') + stat('flame', 'blue', 'Diproses', s.processing + s.ready, null, 'disiapkan / siap diantar') + stat('circle-check', 'emerald', 'Selesai', s.done) + '</div>';
       var row2 = showCash ? '<div class="stat-grid five">' + stat('badge-dollar-sign', 'emerald', 'Pendapatan Bersih', rp(s.netSales), null, s.paidCount + ' pesanan dibayar · setelah pajak') + stat('arrow-down-left', 'green', 'Kas Masuk', rp(s.cashIn)) + stat('arrow-up-right', 'red', 'Kas Keluar', rp(s.cashOut)) +
         stat('wallet', 'blue', 'Saldo Kas', rp(s.balanceAll), null, 'semua waktu') + stat('armchair', 'slate', 'Meja Aktif', activeTables + ' / ' + tables.length) + '</div>' :
         '<div class="stat-grid five">' + stat('clock', 'amber', 'Belum Dibayar', rp(s.unpaidValue), null, s.unpaidCount + ' pesanan') + stat('banknote', 'emerald', 'Dibayar', rp(s.receipts), null, s.paidCount + ' pesanan') + stat('armchair', 'slate', 'Meja Aktif', activeTables + ' / ' + tables.length) + '</div>';

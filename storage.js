@@ -16,7 +16,7 @@
   'use strict';
 
   var PREFIX = 'qmo:';
-  var SCHEMA_VERSION = 1;
+  var SCHEMA_VERSION = 2;
   var COLLECTIONS = ['categories', 'menus', 'tables', 'orders', 'transactions', 'promos', 'users'];
   var DOCS = ['settings', 'meta'];
 
@@ -131,13 +131,14 @@
     return {
       restaurant: {
         name: 'Ayam Kampung Sambal Merintih',
-        tagline: 'Citeureup, Bogor',
+        tagline: 'Rumah makan ayam kampung & sambal khas Citeureup, Bogor',
         logo: '',
         cover: '',
         address: 'Jl. Sabilillah, Citeureup, Kecamatan Citeureup, Kabupaten Bogor, Jawa Barat 16810',
-        whatsapp: '6281234567890',
-        maps: 'https://maps.app.goo.gl/vTnnZQfxfMbfH7Ua6?g_st=ac',
-        hours: 'Setiap hari 09.00 - 21.00',
+        whatsapp: '',
+        maps: 'https://maps.app.goo.gl/B745LpnXmeHN9AaS9?g_st=ac',
+        hours: 'Setiap hari · tutup pukul 22.00',
+        rating: '4,6', ratingCount: 31, priceRange: 'Rp25–50 rb', category: 'Rumah Makan',
         footer: 'Terima kasih sudah makan bersama kami.'
       },
       currency: 'IDR',
@@ -219,9 +220,7 @@
 
   var SEED_USERS = [
     { id: 'u_owner', name: 'Riki (Owner)', username: 'owner', role: 'owner', pin: '1234', active: true },
-    { id: 'u_admin', name: 'Admin Restoran', username: 'admin', role: 'admin', pin: '1234', active: true },
-    { id: 'u_kasir', name: 'Kasir Sari', username: 'kasir', role: 'cashier', pin: '1234', active: true },
-    { id: 'u_dapur', name: 'Dapur Budi', username: 'dapur', role: 'kitchen', pin: '1234', active: true }
+    { id: 'u_kasir', name: 'Kasir Sari', username: 'kasir', role: 'cashier', pin: '1234', active: true }
   ];
 
   /* RNG deterministik agar data contoh selalu konsisten */
@@ -434,7 +433,24 @@
       Object.keys(def).forEach(function (k) { if (!(k in s)) { s[k] = def[k]; changed = true; } });
       if (changed) rawWrite('settings', s);
     },
-    _migrate: function (meta) { meta.schema = SCHEMA_VERSION; rawWrite('meta', meta); },
+    _migrate: function (meta) {
+      try {
+        // v2: hanya peran Owner & Kasir; info rumah makan terbaru; Meja 23
+        var users = (adapter.read('users') || []).filter(function (u) { return u.role === 'owner' || u.role === 'cashier'; });
+        if (!users.some(function (u) { return u.role === 'cashier'; })) users.push({ id: 'u_kasir', name: 'Kasir Sari', username: 'kasir', role: 'cashier', pin: '1234', active: true });
+        rawWrite('users', users);
+        var s = adapter.read('settings') || {}, d = defaultSettings(), r = s.restaurant || (s.restaurant = {});
+        if (!r.maps || /vTnnZQfxfMbfH7Ua6/.test(r.maps)) r.maps = d.restaurant.maps;
+        if (!r.hours || /09\.00 - 21\.00/.test(r.hours)) r.hours = d.restaurant.hours;
+        if (!r.tagline || r.tagline === 'Citeureup, Bogor') r.tagline = d.restaurant.tagline;
+        if (r.whatsapp === '6281234567890') r.whatsapp = '';
+        ['rating', 'ratingCount', 'priceRange', 'category'].forEach(function (k) { if (r[k] == null) r[k] = d.restaurant[k]; });
+        rawWrite('settings', s);
+        var tb = adapter.read('tables') || [];
+        if (!tb.some(function (t) { return t.code === 'MEJA-23'; })) { tb.push({ id: 'tbl_23', code: 'MEJA-23', name: 'Meja 23', capacity: 6, active: true, createdAt: Date.now() }); rawWrite('tables', tb); }
+      } catch (e) {}
+      meta.schema = SCHEMA_VERSION; rawWrite('meta', meta);
+    },
 
     resetSample: function (silent) {
       var seed = buildSeed();
@@ -536,7 +552,7 @@
     getPromos: function () { return Store.list('promos'); },
     savePromo: function (p) { return Store.save('promos', p); },
     deletePromo: function (id) { return Store.remove('promos', id); },
-    getUsers: function () { return Store.list('users'); },
+    getUsers: function () { return Store.list('users').filter(function (u) { return u.role === 'owner' || u.role === 'cashier'; }); },
     saveUser: function (u) { return Store.save('users', u); },
 
     /* ---- pengaturan ---- */

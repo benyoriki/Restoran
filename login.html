@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Masuk — QR Menu & Order</title>
-  <meta name="description" content="Masuk ke dashboard admin, kasir, atau dapur.">
+  <title>Masuk Kasir / Owner — Sambal Merintih</title>
+  <meta name="description" content="Masuk ke dasbor kasir atau owner.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#10b981">
-  <meta property="og:title" content="Masuk — QR Menu & Order"><meta property="og:description" content="Masuk ke dashboard admin, kasir, atau dapur."><meta property="og:image" content="og-image.png">
+  <meta property="og:title" content="Masuk Kasir / Owner — Sambal Merintih"><meta property="og:description" content="Masuk ke dasbor kasir atau owner."><meta property="og:image" content="og-image.png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -21,15 +21,15 @@
 <main class="login-card">
   <aside class="login-aside">
     <a class="brand-l" href="index.html"><span class="brand-mark"><i data-lucide="qr-code"></i></span>Menu<span>&amp;</span>Order</a>
-    <div><h2>Kelola restoran dari satu dashboard.</h2><p>Pesanan, dapur, menu, meja, dan keuangan — semua terhubung.</p></div>
-    <ul><li><i data-lucide="check-circle-2"></i>Owner, Admin, Kasir, Staf Dapur</li><li><i data-lucide="check-circle-2"></i>Hak akses sesuai peran</li><li><i data-lucide="check-circle-2"></i>Siap dihubungkan ke Firebase Authentication</li></ul>
+    <div><h2>Dasbor Kasir &amp; Owner</h2><p>Pesanan dari QR meja masuk ke kasir, laporan terekam untuk owner.</p></div>
+    <ul><li><i data-lucide="check-circle-2"></i>Kasir: pesanan masuk, QRIS, pesanan manual</li><li><i data-lucide="check-circle-2"></i>Owner: laporan, keuangan, menu, meja &amp; QR</li><li><i data-lucide="check-circle-2"></i>Siap dihubungkan ke Firebase Authentication</li></ul>
   </aside>
   <section class="login-form">
     <div><h1>Masuk</h1><p class="muted">Gunakan akun demo di bawah atau isi username dan PIN.</p></div>
     <div class="notice warn"><i data-lucide="shield-alert"></i><span><b>Mode demo.</b> Login ini hanya simulasi di browser dan <b>tidak aman untuk produksi</b>. Versi produksi memakai Firebase Authentication.</span></div>
     <div class="demo-accounts" id="demoAccounts"></div>
     <form id="loginForm" novalidate>
-      <div class="field"><label for="u">Username</label><input id="u" name="u" autocomplete="username" autocapitalize="none" required placeholder="owner / admin / kasir / dapur"></div>
+      <div class="field"><label for="u">Username</label><input id="u" name="u" autocomplete="username" autocapitalize="none" required placeholder="owner / kasir"></div>
       <div class="field" style="margin-top:12px"><label for="p">PIN</label><div class="pw-wrap"><input id="p" name="p" type="password" inputmode="numeric" autocomplete="current-password" required placeholder="PIN"><button type="button" class="icon-btn" id="showPw" aria-label="Tampilkan PIN"><i data-lucide="eye"></i></button></div></div>
       <div class="form-error" id="err" role="alert" hidden style="margin-top:12px"></div>
       <button class="btn btn-primary btn-block btn-lg" id="go" type="submit" style="margin-top:16px"><i data-lucide="log-in"></i>Masuk</button>

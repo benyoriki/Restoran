@@ -109,7 +109,7 @@
         root.innerHTML = head +
           '<div class="cs-body"><div class="cs-table"><span class="chip chip-table">' + ic(cm.type === 'takeaway' ? 'shopping-bag' : 'armchair') + '<b>' + esc(tableLabel()) + '</b></span></div>' +
           '<ul class="cs-list">' + items + '</ul>' +
-          '<label class="lbl" for="fNote">Catatan untuk dapur (opsional)</label><textarea id="fNote" rows="2" maxlength="200" placeholder="Contoh: tidak pedas, tanpa bawang, sambal dipisah">' + esc(form.note) + '</textarea>' +
+          '<label class="lbl" for="fNote">Catatan untuk pesanan (opsional)</label><textarea id="fNote" rows="2" maxlength="200" placeholder="Contoh: tidak pedas, tanpa bawang, sambal dipisah">' + esc(form.note) + '</textarea>' +
           '<label class="lbl" for="fAllergy">' + ic('shield-alert') + ' Catatan alergi (informasi untuk staf)</label><input id="fAllergy" type="text" maxlength="120" placeholder="Contoh: alergi kacang / udang" value="' + esc(form.allergy) + '">' +
           '<details class="opt"' + (form.name || form.phone ? ' open' : '') + '><summary>Data pemesan (opsional)</summary><div class="opt-grid"><input id="fName" type="text" maxlength="50" placeholder="Nama (opsional)" value="' + esc(form.name) + '" autocomplete="name"><input id="fPhone" type="tel" maxlength="20" placeholder="No. HP (opsional)" value="' + esc(form.phone) + '" autocomplete="tel"></div><small class="muted">Tidak wajib. Hanya dipakai staf bila perlu menghubungi Anda.</small></details>' +
           summary +
@@ -122,7 +122,7 @@
         var o = lastOrder;
         root.innerHTML = '<div class="success"><div class="success-ic">' + ic('check') + '</div><h2>Pesanan Berhasil!</h2><p class="muted">Nomor Pesanan</p><div class="order-no">' + esc(o.number) + '</div>' +
           '<p class="muted">' + esc(o.tableName) + ' · ' + App.fmtDate(o.createdAt) + ' · ' + App.fmtTime(o.createdAt) + '</p>' +
-          '<p class="success-msg">Pesanan Anda telah dikirim ke dapur. Silakan menunggu, pesanan akan segera diproses.</p>' +
+          '<p class="success-msg">Pesanan Anda sudah masuk ke kasir. Bayar lewat QRIS atau di kasir, lalu tunggu makanan diantar ke meja.</p>' +
           '<div class="success-sum">' + o.items.map(function (i) { return '<div><span>' + i.qty + '× ' + esc(i.name) + '</span><b>' + rp(i.price * i.qty) + '</b></div>'; }).join('') + '<div class="t"><span>Total</span><b>' + rp(o.total) + '</b></div></div>' +
           '<p class="muted small">Bayar di kasir' + (global.QRIS && QRIS.cfg().enabled ? ' atau langsung lewat QRIS' : '') + '. Status pembayaran: <b>' + esc(Orders.PAY[o.payStatus]) + '</b>.</p>' +
           (global.QRIS && QRIS.cfg().enabled && o.payStatus === 'unpaid' ? '<button class="btn btn-primary btn-block" data-act="qris" data-id="' + o.id + '">' + ic('qr-code') + 'Bayar dengan QRIS</button>' : '') +

@@ -1,4 +1,6 @@
-# QR Menu & Order
+# QR Menu & Order — Ayam Kampung Sambal Merintih
+
+> Halaman utama (`index.html`) adalah website rumah makan: menu favorit, promo, cara pesan (scan QR → menu → QRIS → diantar), dan lokasi. Role dibatasi **Owner** dan **Kasir** (Admin & Staf Dapur dihapus). Data menu/harga masih **contoh** — ganti lewat dashboard Owner.
 
 Sistem pemesanan restoran digital: pelanggan scan QR di meja → pilih menu → pesanan masuk ke dapur → kasir mencatat pembayaran → pemilik memantau penjualan, keuangan, dan laporan.
 
@@ -15,7 +17,7 @@ qr-menu-order/
 ├─ index.html      Landing page / beranda
 ├─ menu.html       Menu digital pelanggan (hasil scan QR)
 ├─ order.html      Pelacak status pesanan pelanggan
-├─ kitchen.html    Dashboard dapur (kartu berwarna per status)
+├─ kitchen.html    Papan Pesanan Masuk untuk Kasir/Owner (kartu berwarna per status)
 ├─ admin.html      Dashboard admin / kasir / owner (router #/...)
 ├─ login.html      Login demo
 ├─ style.css       Sistem desain, komponen, menu pelanggan, landing, dapur
@@ -53,10 +55,8 @@ Font Inter dimuat dari Google Fonts; jika offline, font sistem dipakai.
 
 | Peran | Username | Akses |
 |---|---|---|
-| Owner | `owner` | Semua fitur |
-| Admin | `admin` | Menu, meja, pesanan, laporan, pengaturan |
-| Kasir | `kasir` | Pesanan, pesanan manual, pembayaran |
-| Staf dapur | `dapur` | Dashboard dapur |
+| Owner | `owner` | Semua fitur: laporan, keuangan, menu, promo, meja & QR, pengaturan |
+| Kasir | `kasir` | Pesanan masuk (QR & manual), pembayaran QRIS/tunai, papan pesanan, struk |
 
 Cara cepat: buka `login.html` lalu klik salah satu akun demo.
 
@@ -65,7 +65,7 @@ Cara cepat: buka `login.html` lalu klik salah satu akun demo.
 ## Cara mengetes alur utama
 
 1. Buka `menu.html?table=MEJA-01` (atau scan QR dari **Admin → Meja & QR → QR Code**). Tambahkan menu, buka keranjang, kirim pesanan.
-2. Di tab lain buka `kitchen.html` (login `dapur`). Pesanan muncul di kolom *Pesanan Baru* → **Terima** → **Mulai Memasak** → **Tandai Siap** → **Antar** → **Selesai**.
+2. Di tab lain buka `kitchen.html` (Papan Pesanan, login `kasir`). Pesanan muncul di kolom *Pesanan Baru* → **Terima** → **Mulai Memasak** → **Tandai Siap** → **Antar** → **Selesai**.
 3. Di `admin.html#/orders` (login `kasir`), klik ikon pembayaran, pilih metode, catat. Pesanan belum dibayar **tidak** dihitung sebagai kas masuk.
 4. Coba **Batalkan** (alasan wajib; stok dikembalikan, refund otomatis tercatat bila sudah dibayar).
 5. Lihat **Dashboard**, **Keuangan**, dan **Laporan** (ekspor CSV / cetak).

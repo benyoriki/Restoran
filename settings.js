@@ -111,7 +111,7 @@
 
   /* ---------- Pengaturan Sistem ---------- */
   Admin.register('settings-system', {
-    title: 'Pengaturan Sistem', sub: 'Paket langganan (demo), pengguna & hak akses, kesiapan Firebase', perm: 'settings.system',
+    title: 'Pengaturan Sistem', sub: 'Pengguna & hak akses (Owner dan Kasir), penyimpanan data, kesiapan Firebase', perm: 'settings.system',
     render: function (root, ctx) {
       var s = Store.getSettings(), sub = s.subscription, plan = s.plans.filter(function (p) { return p.id === sub.plan; })[0] || s.plans[0];
       var users = Store.getUsers();
@@ -139,7 +139,8 @@
         '<section class="card"><div class="card-head"><h3>Penyimpanan &amp; Data</h3></div><div class="kv-grid"><div><small>Adapter data</small><b>' + esc(Store.adapterName) + '</b></div><div><small>Versi skema</small><b>v' + Store.SCHEMA_VERSION + '</b></div><div><small>Terpakai</small><b>' + (Store.usedBytes() / 1024).toFixed(0) + ' KB</b></div></div>' +
         '<ul class="check-list"><li class="ok">' + ic('circle-check') + 'Lapisan data terpusat (Store) — siap diganti adapter Firebase</li><li class="ok">' + ic('circle-check') + 'ID unik & snapshot harga pada pesanan</li><li class="todo">' + ic('circle-dashed') + 'Firebase Authentication + role (belum aktif)</li><li class="todo">' + ic('circle-dashed') + 'Firestore/Realtime DB untuk sinkron antar perangkat (belum aktif)</li><li class="todo">' + ic('circle-dashed') + 'Firebase Storage untuk foto menu (belum aktif)</li><li class="todo">' + ic('circle-dashed') + 'Aturan keamanan & isolasi tenant (belum dibuat)</li></ul><p class="muted small">Lihat README.md bagian “Migrasi ke Firebase”.</p></section></div>' +
         '<section class="card"><div class="card-head"><h3>Paket Berlangganan</h3><small class="muted">Dipakai di halaman Home</small></div>' + plansTbl + '</section>' +
-        '<section class="card"><div class="card-head"><h3>Pengguna &amp; Hak Akses (demo)</h3></div>' + usersTbl + '<p class="muted small">Owner: semua fitur · Admin: semua kecuali pengaturan sistem · Kasir: pesanan manual, pembayaran, struk · Staf dapur: hanya dashboard dapur.</p></section>';
+        '<section class="card"><div class="card-head"><h3>Pengguna &amp; Hak Akses (demo)</h3></div>' + usersTbl + '<p class="muted small">Owner: semua fitur, laporan, keuangan, dan pengaturan · Kasir: pesanan masuk, pesanan manual, pembayaran QRIS/tunai, struk.</p></section>';
+      Array.prototype.slice.call(root.querySelectorAll('section.card')).forEach(function (c) { var h = c.querySelector('h3'); if (h && /Langganan|Paket Berlangganan/.test(h.textContent)) c.parentNode.removeChild(c); });
       App.refreshIcons();
       var keep = function () { ctx.rerender(); };
       root.onclick = function (e) {

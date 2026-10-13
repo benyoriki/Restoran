@@ -322,12 +322,10 @@
   }
 
   /* ---------- autentikasi DEMO (bukan untuk produksi) ---------- */
-  var ROLE_NAMES = { owner: 'Owner', admin: 'Admin', cashier: 'Kasir', kitchen: 'Staf Dapur' };
+  var ROLE_NAMES = { owner: 'Owner', cashier: 'Kasir' };
   var PERMS = {
     owner: '*',
-    admin: ['dashboard', 'orders', 'manual', 'kitchen', 'menus', 'categories', 'stock', 'promos', 'tables', 'qr', 'cash', 'transactions', 'reports', 'customers', 'settings.restaurant', 'backup', 'pay', 'orders.cancel'],
-    cashier: ['dashboard', 'orders', 'manual', 'kitchen', 'pay', 'orders.cancel'],
-    kitchen: ['kitchen']
+    cashier: ['dashboard', 'orders', 'manual', 'kitchen', 'pay', 'orders.cancel']
   };
   var Auth = {
     KEY: 'qmo:session', TTL: 12 * 3600 * 1000,
@@ -335,13 +333,13 @@
     current: function () {
       try {
         var s = JSON.parse(localStorage.getItem(Auth.KEY) || 'null');
-        if (!s || Date.now() - s.at > Auth.TTL) return null;
+        if (!s || Date.now() - s.at > Auth.TTL || !PERMS[s.role]) return null;
         return s;
       } catch (e) { return null; }
     },
     login: function (username, pin) {
       var u = Store.getUsers().filter(function (x) { return x.active !== false && x.username.toLowerCase() === String(username || '').trim().toLowerCase(); })[0];
-      if (!u || String(u.pin) !== String(pin)) throw new Error('Username atau PIN salah.');
+      if (!u || !PERMS[u.role] || String(u.pin) !== String(pin)) throw new Error('Username atau PIN salah.');
       var s = { userId: u.id, name: u.name, username: u.username, role: u.role, at: Date.now() };
       try { localStorage.setItem(Auth.KEY, JSON.stringify(s)); } catch (e) { throw new Error('Browser menolak penyimpanan sesi.'); }
       return s;
@@ -354,7 +352,7 @@
       if (!perm) return true;
       return p.indexOf(perm) >= 0;
     },
-    home: function (role) { return role === 'kitchen' ? 'kitchen.html' : 'admin.html'; },
+    home: function (role) { return 'admin.html'; },
     /** Guard halaman: arahkan ke login bila belum masuk / tidak berhak. */
     require: function (perm) {
       var s = Auth.current();
