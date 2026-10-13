@@ -155,6 +155,7 @@
         { id: 'qris', name: 'QRIS', active: true },
         { id: 'other', name: 'Lainnya', active: true }
       ],
+      qris: { enabled: true, merchant: 'Riki Hermawan, Digital & Kreatif', nmid: 'ID1026615097429', dynamic: true, payload: '00020101021126610014COM.GO-JEK.WWW01189360091434351954690210G4351954690303UMI51440014ID.CO.QRIS.WWW0215ID10266150974290303UMI5204899953033605802ID5924RIKI HERMAWAN, Digital &6005BOGOR61051681062070703A016304F76A' },
       developer: { name: 'Riki Hermawan', handle: '@benyoriki', url: 'https://benyoriki.com', wa: '' },
       subscription: { plan: 'pro', status: 'demo', endDate: '' },
       plans: [
@@ -247,6 +248,7 @@
       var n = ('0' + i).slice(-2);
       tables.push({ id: 'tbl_' + n, code: 'MEJA-' + n, name: 'Meja ' + n, capacity: i <= 4 ? 4 : 6, active: i !== 5, createdAt: Date.now() });
     }
+    tables.push({ id: 'tbl_23', code: 'MEJA-23', name: 'Meja 23', capacity: 6, active: true, createdAt: Date.now() });
     var promos = SEED_PROMOS();
     var users = clone(SEED_USERS);
     var meta = { schema: SCHEMA_VERSION, sample: true, createdAt: Date.now(), orderCounter: 0, dayCounters: {} };

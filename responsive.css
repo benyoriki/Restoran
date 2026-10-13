@@ -76,3 +76,8 @@
   .ch-bar, .hb-fill, .bar i { -webkit-print-color-adjust: exact; print-color-adjust: exact; } * { color-scheme: light !important; }
   :root { --surface: #fff; --surface-2: #fff; --surface-3: #eee; --text: #000; --text-2: #222; --muted: #444; --border: #bbb; }
 }
+
+/* ---------- perbaikan layar HP lebar / tablet kecil (721–1100px) ---------- */
+@media (max-width: 1280px) and (min-width: 721px) { .stat-grid, .stat-grid.three, .stat-grid.four, .stat-grid.five { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+@media (max-width: 1100px) { .k-board { align-content: start; } }
+@media (max-width: 720px) { .login-body { place-items: start center; padding-top: 6vh; } }

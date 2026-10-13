@@ -35,7 +35,12 @@
         F('Jumlah digit (format berurutan)', inp('digits', s.orderDigits, 'type="number" min="3" max="8"')) + F('Contoh hasil', '<input id="orderPreview" readonly value="">') +
         '<div class="field span2">' + sw('kSound', s.kitchen.sound !== false, 'Bunyi notifikasi dapur aktif secara default') + '</div>' + F('Peringatan pesanan terlalu lama (menit)', inp('late', s.kitchen.lateMinutes, 'type="number" min="3" max="120"'), 'Kartu dapur ditandai merah setelah melewati batas ini.') + '</div>';
       var receipt = '<div class="form-grid">' + F('Judul struk', inp('rHeader', s.receipt.header, 'maxlength="40"')) + F('Lebar kertas', '<select name="rWidth"><option value="58mm"' + (s.receipt.width === '58mm' ? ' selected' : '') + '>58 mm</option><option value="80mm"' + (s.receipt.width === '80mm' ? ' selected' : '') + '>80 mm</option></select>') + F('Pesan penutup', inp('rFooter', s.receipt.footer, 'maxlength="100"'), '', true) + '<div class="field span2">' + sw('rTax', s.receipt.showTax !== false, 'Tampilkan baris pajak pada struk') + '</div></div>';
-      var pay = '<p class="muted">Pembayaran hanya <b>dicatat manual</b> oleh kasir. QRIS/transfer belum terintegrasi otomatis dengan penyedia pembayaran.</p><ul class="pay-list">' + s.paymentMethods.map(function (m, i) {
+      var qs = s.qris || {};
+      var pay = '<div class="card flat qris-set"><h3>' + ic('qr-code') + ' QRIS</h3><div class="form-grid"><div class="field span2">' + sw('qrisOn', qs.enabled !== false, 'Aktifkan pembayaran QRIS untuk pelanggan') + '</div>' +
+        F('Nama merchant', inp('qrisMerchant', qs.merchant || '', 'maxlength="60"')) + F('NMID', inp('qrisNmid', qs.nmid || '', 'maxlength="30"')) +
+        '<div class="field span2">' + sw('qrisDyn', qs.dynamic !== false, 'Isi nominal otomatis (QRIS dinamis)') + '<small class="hint">Nominal pesanan otomatis masuk ke QR. Jika aplikasi pembayaran menolak, matikan opsi ini (pelanggan mengetik nominal sendiri).</small></div>' +
+        F('Kode QRIS statis (payload)', '<textarea name="qrisPayload" rows="4" spellcheck="false">' + esc(qs.payload || '') + '</textarea>', 'Teks hasil pindai QRIS statis merchant Anda (diawali 000201). Divalidasi otomatis (CRC).', true) + '</div></div>' +
+        '<p class="muted">Pembayaran <b>dicatat manual</b> oleh kasir. QRIS tidak terhubung otomatis ke penyedia pembayaran, jadi kasir harus memastikan dana masuk di aplikasi merchant (GoPay Merchant) sebelum menekan Catat Pembayaran.</p><ul class="pay-list">' + s.paymentMethods.map(function (m, i) {
         return '<li><input name="pmName' + i + '" value="' + esc(m.name) + '" maxlength="24" aria-label="Nama metode"><label class="switch sm"><input type="checkbox" name="pmOn' + i + '"' + (m.active ? ' checked' : '') + (m.id === 'cash' ? ' disabled' : '') + ' aria-label="Aktif"><span class="slider"></span></label>' + (['cash', 'transfer', 'qris', 'other'].indexOf(m.id) < 0 ? '<button type="button" class="icon-btn sm danger" data-act="pm-del" data-i="' + i + '" aria-label="Hapus">' + ic('trash-2') + '</button>' : '<span class="muted sm">bawaan</span>') + '</li>';
       }).join('') + '</ul><button type="button" class="btn btn-soft btn-sm" data-act="pm-add">' + ic('plus') + 'Tambah metode lain</button>';
       var d = s.developer, dark = App.Theme.current() === 'dark';
@@ -81,6 +86,9 @@
         cur.orderPrefix = f.prefix.value; cur.orderFormat = f.format.value; cur.orderDigits = Math.max(3, Math.min(8, parseInt(f.digits.value, 10) || 5));
         cur.kitchen = { sound: f.kSound.checked, lateMinutes: late };
         cur.receipt = { header: f.rHeader.value.trim(), width: f.rWidth.value, footer: f.rFooter.value.trim(), showTax: f.rTax.checked };
+        var qp = (f.qrisPayload.value || '').trim();
+        if (qp) { var qv = QRIS.validate(qp); if (!qv.ok) { App.toast('QRIS: ' + qv.error, 'error'); return; } }
+        cur.qris = { enabled: f.qrisOn.checked && !!qp, merchant: f.qrisMerchant.value.trim(), nmid: f.qrisNmid.value.trim(), dynamic: f.qrisDyn.checked, payload: qp };
         cur.paymentMethods = cur.paymentMethods.map(function (m, i) { return { id: m.id, name: (f['pmName' + i].value.trim() || m.name), active: m.id === 'cash' ? true : f['pmOn' + i].checked }; });
         try { Store.saveSettings(cur); imgDraft = null; App.toast('Pengaturan disimpan.'); ctx.rerender(); ctx.refreshShell && ctx.refreshShell(); } catch (er) { App.fail(er); }
       });

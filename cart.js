@@ -124,7 +124,8 @@
           '<p class="muted">' + esc(o.tableName) + ' · ' + App.fmtDate(o.createdAt) + ' · ' + App.fmtTime(o.createdAt) + '</p>' +
           '<p class="success-msg">Pesanan Anda telah dikirim ke dapur. Silakan menunggu, pesanan akan segera diproses.</p>' +
           '<div class="success-sum">' + o.items.map(function (i) { return '<div><span>' + i.qty + '× ' + esc(i.name) + '</span><b>' + rp(i.price * i.qty) + '</b></div>'; }).join('') + '<div class="t"><span>Total</span><b>' + rp(o.total) + '</b></div></div>' +
-          '<p class="muted small">Pembayaran dilakukan di kasir. Status pembayaran: <b>' + esc(Orders.PAY[o.payStatus]) + '</b>.</p>' +
+          '<p class="muted small">Bayar di kasir' + (global.QRIS && QRIS.cfg().enabled ? ' atau langsung lewat QRIS' : '') + '. Status pembayaran: <b>' + esc(Orders.PAY[o.payStatus]) + '</b>.</p>' +
+          (global.QRIS && QRIS.cfg().enabled && o.payStatus === 'unpaid' ? '<button class="btn btn-primary btn-block" data-act="qris" data-id="' + o.id + '">' + ic('qr-code') + 'Bayar dengan QRIS</button>' : '') +
           '<a class="btn btn-outline btn-block" href="order.html?id=' + o.id + '">Lihat Pesanan Saya</a><button class="btn btn-ghost btn-block" data-close>' + ic('rotate-ccw') + 'Pesan Lagi</button></div>';
         App.refreshIcons();
       }
@@ -142,6 +143,7 @@
       root.addEventListener('click', function (e) {
         var b = e.target.closest('[data-act]'); if (!b) return;
         var act = b.getAttribute('data-act'), id = b.getAttribute('data-id');
+        if (act === 'qris') { QRIS.open(id); return; }
         readForm();
         if (act === 'inc') { var r = Cart.add(id, 1); if (!r.ok) App.toast(r.message, 'warn'); paint(); }
         else if (act === 'dec') { Cart.setQty(id, Cart.qty(id) - 1); paint(); }

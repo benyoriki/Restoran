@@ -30,6 +30,7 @@ qr-menu-order/
 ├─ finance.js      Kas masuk/keluar, transaksi
 ├─ reports.js      Laporan penjualan, keuangan, pelanggan
 ├─ qr.js           QR code meja (unduh PNG, cetak)
+├─ qris.js         Pembayaran QRIS (QRIS dinamis + nominal otomatis)
 ├─ settings.js     Pengaturan, langganan demo, backup
 ├─ vendor/         qrcode.js, lucide.min.js (disalin lokal)
 └─ favicon.svg, og-image.png
@@ -71,6 +72,12 @@ Cara cepat: buka `login.html` lalu klik salah satu akun demo.
 
 Sinkronisasi antar tab di browser yang sama berjalan otomatis (BroadcastChannel / storage event).
 
+## Pembayaran QRIS
+
+QRIS statis merchant disimpan di **Pengaturan → Pembayaran** (payload teks, divalidasi CRC). Untuk tiap pesanan, `qris.js` membuat **QRIS dinamis** (nominal otomatis terisi, CRC dihitung ulang). Pelanggan menekan **Bayar dengan QRIS** setelah memesan; kasir melihat tombol QRIS di daftar pesanan.
+
+⚠️ Tidak ada deteksi pembayaran otomatis (butuh backend + notifikasi penyedia pembayaran). Kasir **wajib memastikan dana masuk** di aplikasi merchant, lalu menekan *Catat Pembayaran*. Jika aplikasi pembayaran menolak QR bernominal, matikan opsi "QRIS dinamis" agar pelanggan mengetik nominal sendiri.
+
 ## QR code & Base URL
 
 QR berisi alamat lengkap `…/menu.html?table=KODE-MEJA`. Agar bisa dipindai dari HP pelanggan, **atur Base URL** di **Admin → Meja & QR → QR Code** ke alamat publik situs Anda, misalnya `https://username.github.io/qr-menu-order/`. Selama Base URL masih `localhost`/lokal, QR hanya terbuka dari perangkat yang sama (aplikasi menampilkan peringatan).
@@ -105,7 +112,7 @@ Daftar kesiapan juga tersedia di **Admin → Pengaturan Sistem**.
 
 - **LocalStorage tidak sinkron antar perangkat.** Pesanan dari HP pelanggan tidak akan muncul di dapur pada perangkat lain. Demo lintas-perangkat memerlukan backend (Firebase). Antar-tab di satu browser berfungsi.
 - Login/peran hanyalah simulasi, bukan keamanan.
-- **QRIS/pembayaran online tidak terintegrasi**; pembayaran dicatat manual oleh kasir.
+- **Konfirmasi QRIS tidak otomatis**; pembayaran dicatat manual oleh kasir setelah dana masuk.
 - Langganan/paket harga hanyalah demo tampilan, tanpa penagihan.
 - Kapasitas LocalStorage terbatas (~5 MB); foto menu dikompres otomatis (maks. 800 px).
 - Laba hanya perkiraan dan ditandai tidak lengkap bila data biaya belum diisi.

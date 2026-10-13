@@ -329,3 +329,11 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 .login-aside { padding: 40px; color: #fff; background: radial-gradient(120% 120% at 0% 0%, #10b981, #065f46 55%, #0a1a13); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; } .login-aside h2 { font-size: 30px; letter-spacing: -.03em; margin-bottom: 10px; } .login-aside p { opacity: .85; } .login-aside ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14.5px; } .login-aside li { display: flex; gap: 8px; align-items: center; }
 .login-form { padding: 40px; display: grid; gap: 16px; align-content: center; } .login-form h1 { font-size: 26px; } .demo-accounts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; } .demo-accounts button { text-align: left; padding: 10px 12px; border: 1px solid var(--border-2); border-radius: 12px; background: var(--surface); display: grid; gap: 1px; } .demo-accounts button:hover { border-color: var(--primary); background: var(--primary-soft); } .demo-accounts b { font-size: 13.5px; } .demo-accounts small { color: var(--muted); font-size: 12px; }
 .pw-wrap { position: relative; } .pw-wrap .icon-btn { position: absolute; right: 4px; top: 4px; width: 34px; height: 34px; }
+
+/* QRIS */
+.qris-card { display: grid; gap: 8px; justify-items: center; text-align: center; }
+.qris-head { display: grid; gap: 0; } .qris-head b { font-size: 22px; letter-spacing: .12em; } .qris-head small { color: var(--muted); font-size: 12px; }
+.qris-merchant { font-weight: 800; font-size: 15px; margin: 4px 0 0; text-transform: uppercase; }
+.qris-qr { width: min(280px, 78vw); aspect-ratio: 1; padding: 8px; background: #fff; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,.08)); } .qris-qr svg { width: 100%; height: 100%; display: block; }
+.qris-amount { display: grid; gap: 0; } .qris-amount small { color: var(--muted); } .qris-amount b { font-size: 26px; color: var(--primary-700, #047857); }
+.qris-set h3 { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; } .qris-set textarea { font-family: ui-monospace, monospace; font-size: 12px; }

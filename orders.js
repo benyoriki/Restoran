@@ -204,7 +204,7 @@
     App.formModal({
       title: 'Catat Pembayaran · ' + o.number, size: 'sm', submitText: 'Simpan Pembayaran', values: { method: methods[0] ? methods[0].id : 'cash', received: o.total, ref: '' },
       fields: [
-        { name: 'method', label: 'Metode pembayaran', type: 'select', options: methods.map(function (m) { return { value: m.id, label: m.name }; }), hint: 'Pencatatan manual — belum terhubung otomatis ke penyedia pembayaran (termasuk QRIS).' },
+        { name: 'method', label: 'Metode pembayaran', type: 'select', options: methods.map(function (m) { return { value: m.id, label: m.name }; }), hint: 'Pencatatan manual. Untuk QRIS, pastikan dana sudah masuk di aplikasi merchant sebelum menyimpan (tombol QRIS ada di daftar pesanan).' },
         { name: 'received', label: 'Uang diterima (tunai)', type: 'number', min: 0, step: 500, prefix: 'Rp', show: function (c) { return c.method === 'cash'; }, hint: 'Total tagihan ' + rp(o.total) },
         { name: 'ref', label: 'Nomor referensi (opsional)', maxlength: 40, show: function (c) { return c.method !== 'cash'; } }
       ],
@@ -260,6 +260,7 @@
         { label: 'Aksi', align: 'center', render: function (o) {
           var b = '<button class="icon-btn sm" data-act="view" data-id="' + o.id + '" title="Detail" aria-label="Detail">' + ic('eye') + '</button>';
           if (o.payStatus === 'unpaid' && o.status !== 'cancelled' && can('pay')) b += '<button class="icon-btn sm ok" data-act="pay" data-id="' + o.id + '" title="Catat pembayaran" aria-label="Catat pembayaran">' + ic('banknote') + '</button>';
+          if (o.payStatus === 'unpaid' && o.status !== 'cancelled' && can('pay') && global.QRIS && QRIS.cfg().enabled) b += '<button class="icon-btn sm" data-act="qris" data-id="' + o.id + '" title="Tampilkan QRIS" aria-label="Tampilkan QRIS">' + ic('qr-code') + '</button>';
           if (o.status !== 'cancelled' && o.status !== 'done' && can('orders.cancel')) b += '<button class="icon-btn sm danger" data-act="cancel" data-id="' + o.id + '" title="Batalkan" aria-label="Batalkan">' + ic('ban') + '</button>';
           if (o.payStatus === 'paid' && o.status === 'done' && can('orders.cancel')) b += '<button class="icon-btn sm" data-act="refund" data-id="' + o.id + '" title="Kembalikan dana" aria-label="Kembalikan dana">' + ic('undo-2') + '</button>';
           return '<div class="row-actions">' + b + '</div>';
@@ -287,6 +288,7 @@
         var act = b.getAttribute('data-act'), id = b.getAttribute('data-id');
         if (act === 'view') orderDetail(id);
         else if (act === 'pay') payDialog(id, keep);
+        else if (act === 'qris') QRIS.open(id);
         else if (act === 'cancel') cancelDialog(id, keep);
         else if (act === 'refund') {
           var o = Store.getOrder(id);
@@ -440,7 +442,8 @@
             (cancelled ? '<div class="notice danger">' + ic('ban') + '<span>Pesanan dibatalkan' + (o.cancelReason ? ': ' + esc(o.cancelReason) : '') + '</span></div>' : '<ol class="track">' + tl + '</ol>') + '</div>' +
             '<div class="card flat"><h3>Rincian</h3><ul class="hist-items big">' + o.items.map(function (i) { return '<li><span>' + i.qty + '× ' + esc(i.name) + (i.note ? '<small>' + esc(i.note) + '</small>' : '') + '</span><b>' + rp(i.price * i.qty) + '</b></li>'; }).join('') + '</ul>' +
             '<div class="summary"><div class="sum-row"><span>Subtotal</span><b>' + rp(o.subtotal) + '</b></div>' + (o.discount ? '<div class="sum-row disc"><span>Diskon</span><b>-' + rp(o.discount) + '</b></div>' : '') + (o.service ? '<div class="sum-row"><span>Layanan</span><b>' + rp(o.service) + '</b></div>' : '') + (o.tax ? '<div class="sum-row"><span>Pajak</span><b>' + rp(o.tax) + '</b></div>' : '') + '<div class="sum-row total"><span>Total</span><b>' + rp(o.total) + '</b></div></div>' +
-            '<p class="muted small">Pembayaran dilakukan di kasir. Status pembayaran: <b>' + PAY[o.payStatus] + '</b>' + (o.payStatus === 'paid' ? ' via ' + esc(payMethodName(o.payMethod)) : '') + '.</p></div>' +
+            '<p class="muted small">Pembayaran dapat dilakukan di kasir atau lewat QRIS. Status pembayaran: <b>' + PAY[o.payStatus] + '</b>' + (o.payStatus === 'paid' ? ' via ' + esc(payMethodName(o.payMethod)) : '') + '.</p>' +
+            (global.QRIS && QRIS.cfg().enabled && o.payStatus === 'unpaid' && o.status !== 'cancelled' ? '<button class="btn btn-primary btn-block" data-act="qris" data-id="' + o.id + '">' + ic('qr-code') + 'Bayar dengan QRIS</button>' : '') + '</div>' +
             '<div class="btn-row stack"><button class="btn btn-soft btn-block" data-act="reorder">' + ic('rotate-ccw') + 'Pesan Lagi</button><a class="btn btn-ghost btn-block" href="menu.html' + (o.tableCode ? '?table=' + encodeURIComponent(o.tableCode) : '?type=takeaway') + '">' + ic('utensils-crossed') + 'Kembali ke Menu</a></div>' +
             '<p class="demo-note">' + ic('info') + 'Status diperbarui otomatis bila dapur memakai browser yang sama (mode simulasi). Pada versi Firebase, status tersinkron antar perangkat.</p></div>';
         }
@@ -451,6 +454,7 @@
       Store.subscribe(App.debounce(render, 200));
       setInterval(render, 20000);
       root.addEventListener('click', function (e) {
+        var qb = e.target.closest('[data-act="qris"]'); if (qb) { QRIS.open(qb.getAttribute('data-id')); return; }
         if (e.target.closest('[data-act="reorder"]')) {
           var o = Store.getOrder(st.id); if (!o) return;
           var qs = new URLSearchParams(); if (o.tableCode) qs.set('table', o.tableCode); else qs.set('type', 'takeaway');
