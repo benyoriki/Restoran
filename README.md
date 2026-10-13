@@ -19,6 +19,7 @@ qr-menu-order/
 ├─ admin.html      Dashboard admin / kasir / owner (router #/...)
 ├─ login.html      Login demo
 ├─ style.css       Sistem desain, komponen, menu pelanggan, landing, dapur
+├─ landing.css     Tampilan beranda (ringan, mode hemat otomatis)
 ├─ dashboard.css   Layout admin, sidebar, tabel, POS
 ├─ responsive.css  Tampilan HP / tablet / desktop + cetak
 ├─ storage.js      Store (LocalStorage), data contoh, backup/restore, ImageStore

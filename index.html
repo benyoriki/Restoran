@@ -18,8 +18,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>try{var n=navigator,c=n.connection||{};if(/Windows NT [56]\.[01]/.test(n.userAgent)||(n.hardwareConcurrency&&n.hardwareConcurrency<=2)||(n.deviceMemory&&n.deviceMemory<=2)||c.saveData)document.documentElement.className+=' lite'}catch(e){}</script>
   <script>try{var t=localStorage.getItem('qmo:theme');document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}</script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="landing.css">
   <link rel="stylesheet" href="responsive.css">
 </head>
 <body class="land">
@@ -40,6 +42,7 @@
 
 <main>
 <section class="l-hero" id="beranda">
+  <div class="hero-aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="grid"></i><i class="fade"></i></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <span class="hero-badge"><i data-lucide="circle-dot"></i>Sistem Pemesanan Restoran Modern</span>
@@ -60,10 +63,15 @@
     <div class="hero-visual" aria-hidden="true">
       <div class="mock-laptop"><div class="ml-side"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ml-main"><div class="ml-cards" id="mlCards"></div><div class="ml-bars" id="mlBars"></div></div></div>
       <div class="mock-phone"><div class="mp-in"><div class="mp-top"><span id="mpName">Menu</span><span>🛒</span></div><div class="mp-pills"><i>Semua</i><i>Ayam</i><i>Nasi</i><i>Minuman</i></div><div class="mp-grid" id="mpGrid"></div></div></div>
+      <div class="chip chip-a"><i data-lucide="bell-ring"></i><span><b>Pesanan baru</b>Meja 23 · 2 item</span></div>
+      <div class="chip chip-b"><i data-lucide="badge-check"></i><span><b>Dibayar via QRIS</b>Rp 59.400</span></div>
+      <div class="chip chip-c"><i data-lucide="chef-hat"></i><span><b>Dapur</b>Sedang dimasak</span></div>
       <div class="mock-qr"><img id="mqImg" alt="Contoh QR Code meja"><b>SCAN QR · PESAN DARI MEJA</b><span>MEJA 01</span></div>
     </div>
   </div>
 </section>
+
+<section class="l-stats" aria-label="Ringkasan data contoh"><div class="wrap"><div class="stats-row" id="statsRow"></div><p class="stats-note">Angka dihitung dari data contoh yang tersimpan di browser Anda.</p></div></section>
 
 <section class="l-section" id="fitur">
   <div class="wrap">
@@ -256,6 +264,18 @@
   } else document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
   App.refreshIcons();
 })();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  try {
+    var items = [[Store.getMenus().length, 'Menu siap pesan'], [Store.getTables().length, 'Meja + QR unik'], [Store.getOrders().length, 'Pesanan contoh'], [4, 'Peran pengguna']];
+    var row = document.getElementById('statsRow');
+    row.innerHTML = items.map(function (x) { return '<div class="stat-i"><b data-to="' + x[0] + '">0</b><span>' + x[1] + '</span></div>'; }).join('');
+    var els = row.querySelectorAll('b'), lite = document.documentElement.className.indexOf('lite') >= 0;
+    function run() { for (var i = 0; i < els.length; i++) (function (el) { var to = +el.getAttribute('data-to'); if (lite) { el.textContent = to; return; } var t0 = null; function f(t) { if (!t0) t0 = t; var p = Math.min(1, (t - t0) / 1100); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); } requestAnimationFrame(f); })(els[i]); }
+    if ('IntersectionObserver' in window) { var o = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { run(); o.disconnect(); } }, { threshold: .4 }); o.observe(row); } else run();
+  } catch (e) {}
+});
 </script>
 </body>
 </html>
