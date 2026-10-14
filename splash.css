@@ -1,0 +1,16 @@
+/* Layar pemuatan 3 detik — murni CSS (tetap hilang walau JavaScript gagal) */
+#splash { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 24px;
+  background: radial-gradient(60% 50% at 50% 38%, #5b0d14 0%, #2a0709 55%, #120405 100%); animation: spOut .5s ease 3s forwards; }
+#splash .sp-in { display: grid; justify-items: center; gap: 14px; width: min(360px, 100%); }
+#splash .sp-logo { width: 150px; height: 150px; border-radius: 50%; animation: spPop .8s cubic-bezier(.2, .8, .2, 1) both, spGlow 1.6s ease-in-out .8s infinite alternate; }
+#splash .sp-logo img { width: 100%; height: 100%; display: block; }
+#splash h1 { font: 800 22px/1.2 Inter, system-ui, 'Segoe UI', Arial, sans-serif; letter-spacing: -.01em; margin: 6px 0 0; animation: spUp .6s ease .3s both; }
+#splash p { font: 500 14px Inter, system-ui, 'Segoe UI', Arial, sans-serif; color: #ffb9ad; margin: 0; animation: spUp .6s ease .5s both; }
+#splash .sp-bar { width: 100%; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, .14); overflow: hidden; margin-top: 10px; }
+#splash .sp-bar i { display: block; height: 100%; width: 100%; border-radius: 99px; background: linear-gradient(90deg, #e11d2e, #ff7a3d, #ffb020); transform-origin: left; animation: spBar 3s linear forwards; }
+@keyframes spBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes spOut { to { opacity: 0; visibility: hidden; } }
+@keyframes spPop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: scale(1); } }
+@keyframes spUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes spGlow { from { box-shadow: 0 0 20px rgba(225, 29, 46, .35); } to { box-shadow: 0 0 48px rgba(255, 110, 60, .6); } }
+html.lite #splash .sp-logo { animation: spPop .5s ease both; }

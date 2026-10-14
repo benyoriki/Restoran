@@ -36,7 +36,10 @@ qr-menu-order/
 ├─ qris.js         Pembayaran QRIS (QRIS dinamis + nominal otomatis)
 ├─ settings.js     Pengaturan, langganan demo, backup
 ├─ vendor/         qrcode.js, lucide.min.js (disalin lokal)
-└─ favicon.svg, og-image.png
+├─ splash.css      Layar pemuatan 3 detik (logo + progress bar)
+├─ manifest.webmanifest, sw.js, pwa.js   PWA (instal di HP & Windows, cadangan offline)
+├─ og-image.jpg    Gambar preview link WhatsApp/sosial media (1200×630)
+└─ assets/         Logo, ikon PWA (192/512/maskable), favicon, foto hero
 ```
 
 ## Menjalankan lokal
@@ -118,3 +121,11 @@ Daftar kesiapan juga tersedia di **Admin → Pengaturan Sistem**.
 - Kapasitas LocalStorage terbatas (~5 MB); foto menu dikompres otomatis (maks. 800 px).
 - Laba hanya perkiraan dan ditandai tidak lengkap bila data biaya belum diisi.
 - Mengosongkan data browser menghapus semua data; lakukan backup JSON secara berkala.
+
+## Tampilan, PWA & preview link (pembaruan)
+
+- **Palet merah** mengikuti logo; warna hijau hanya dipakai untuk status sukses (lunas/selesai).
+- **Logo** (`assets/icon-192.png`) dipakai di navigasi, login, dashboard, papan pesanan, dan header menu pelanggan.
+- **Loading screen 3 detik** di `index.html` dan `menu.html` (murni CSS, tetap hilang walau JavaScript gagal). Ubah durasi di `splash.css` (`3s`).
+- **PWA**: `manifest.webmanifest` + `sw.js` + `pwa.js`. Butuh HTTPS (GitHub Pages sudah cukup). Chrome/Edge (HP & Windows) menampilkan tombol **Instal Aplikasi**; di iPhone pakai Bagikan → Tambah ke Layar Utama. Setelah mengubah file, naikkan `VERSION` di `sw.js`.
+- **Preview WhatsApp**: tag Open Graph di `index.html` & `menu.html` memakai `https://benyoriki.github.io/Restoran/og-image.jpg`. WhatsApp menyimpan cache preview; jika belum berubah, kirim link dengan tambahan `?v=2`.

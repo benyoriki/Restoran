@@ -23,10 +23,10 @@
       var q = QR.make(text), n = q.getModuleCount(), cell = Math.max(6, Math.floor(560 / n)), qs = cell * n, pad = 40;
       var W = qs + pad * 2, H = qs + pad * 2 + 150, c = document.createElement('canvas'); c.width = W; c.height = H;
       var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H);
-      x.fillStyle = '#10b981'; x.fillRect(0, 0, W, 14);
+      x.fillStyle = '#e11d2e'; x.fillRect(0, 0, W, 14);
       x.fillStyle = '#111'; x.textAlign = 'center'; x.font = '700 26px Inter,Arial,sans-serif'; x.fillText(restName || '', W / 2, 62, W - 40);
       for (var r = 0; r < n; r++) for (var cc = 0; cc < n; cc++) if (q.isDark(r, cc)) x.fillRect(pad + cc * cell, 84 + r * cell, cell, cell);
-      x.font = '800 44px Inter,Arial,sans-serif'; x.fillStyle = '#047857'; x.fillText(label, W / 2, 84 + qs + 56);
+      x.font = '800 44px Inter,Arial,sans-serif'; x.fillStyle = '#9b0f1a'; x.fillText(label, W / 2, 84 + qs + 56);
       x.font = '500 20px Inter,Arial,sans-serif'; x.fillStyle = '#444'; x.fillText(sub || 'Scan QR untuk memesan dari meja', W / 2, 84 + qs + 90);
       return c;
     },
@@ -38,7 +38,7 @@
     },
     printCards: function (items) {
       var r = Store.getSettings().restaurant;
-      var css = '<style>@page{size:A4;margin:10mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;margin:0;color:#111}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8mm}.card{border:2px solid #10b981;border-radius:14px;padding:8mm 6mm;text-align:center;break-inside:avoid;page-break-inside:avoid}.card h1{font-size:18px;margin:0 0 2px}.card p{margin:0;font-size:12px;color:#444}.card img{width:62mm;height:62mm;margin:5mm auto}.scan{font-weight:800;font-size:20px;letter-spacing:.5px}.meja{display:inline-block;background:#10b981;color:#fff;font-weight:800;font-size:26px;padding:3px 18px;border-radius:10px;margin-top:3mm}.steps{font-size:11px;color:#555;margin-top:4mm}.url{font-size:9px;color:#777;word-break:break-all;margin-top:3mm}</style>';
+      var css = '<style>@page{size:A4;margin:10mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;margin:0;color:#111}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8mm}.card{border:2px solid #e11d2e;border-radius:14px;padding:8mm 6mm;text-align:center;break-inside:avoid;page-break-inside:avoid}.card h1{font-size:18px;margin:0 0 2px}.card p{margin:0;font-size:12px;color:#444}.card img{width:62mm;height:62mm;margin:5mm auto}.scan{font-weight:800;font-size:20px;letter-spacing:.5px}.meja{display:inline-block;background:#e11d2e;color:#fff;font-weight:800;font-size:26px;padding:3px 18px;border-radius:10px;margin-top:3mm}.steps{font-size:11px;color:#555;margin-top:4mm}.url{font-size:9px;color:#777;word-break:break-all;margin-top:3mm}</style>';
       var html = css + '<div class="grid">' + items.map(function (it) {
         return '<div class="card"><h1>' + esc(r.name) + '</h1><p>' + esc(r.tagline || '') + '</p><img alt="QR ' + esc(it.label) + '" src="' + QR.dataUrl(it.url) + '"><div class="scan">SCAN QR · PESAN DARI MEJA</div><div class="meja">' + esc(it.label.toUpperCase()) + '</div><div class="steps">Pilih menu → Pesan → Tunggu → Nikmati</div><div class="url">' + esc(it.url) + '</div></div>';
       }).join('') + '</div>';

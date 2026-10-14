@@ -85,7 +85,7 @@
     x.fillStyle = '#fff'; x.fillRect(pad - 12, top - 6, qs + 24, qs + 12); x.fillStyle = '#000';
     for (var r = 0; r < n; r++) for (var cc = 0; cc < n; cc++) if (q.isDark(r, cc)) x.fillRect(pad + cc * cell, top + 6 + r * cell, cell, cell);
     var y = top + qs + 52; x.fillStyle = '#111';
-    if (o.amount) { x.font = '500 22px Inter,Arial,sans-serif'; x.fillStyle = '#555'; x.fillText('Total bayar' + (o.number ? ' · ' + o.number : ''), W / 2, y); x.font = '900 48px Inter,Arial,sans-serif'; x.fillStyle = '#047857'; x.fillText(rp(o.amount), W / 2, y + 54); y += 96; }
+    if (o.amount) { x.font = '500 22px Inter,Arial,sans-serif'; x.fillStyle = '#555'; x.fillText('Total bayar' + (o.number ? ' · ' + o.number : ''), W / 2, y); x.font = '900 48px Inter,Arial,sans-serif'; x.fillStyle = '#9b0f1a'; x.fillText(rp(o.amount), W / 2, y + 54); y += 96; }
     x.font = '500 18px Inter,Arial,sans-serif'; x.fillStyle = '#666'; x.fillText('Scan dengan GoPay, OVO, DANA, ShopeePay atau m-banking', W / 2, y, W - 80);
     return c;
   }

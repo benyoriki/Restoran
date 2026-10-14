@@ -82,7 +82,7 @@
   var Theme = {
     KEY: 'qmo:theme',
     get: function () { try { return localStorage.getItem(Theme.KEY); } catch (e) { return null; } },
-    apply: function (t) { document.documentElement.setAttribute('data-theme', t); var m = $('meta[name="theme-color"]'); if (m) m.setAttribute('content', t === 'dark' ? '#0f1512' : '#10b981'); },
+    apply: function (t) { document.documentElement.setAttribute('data-theme', t); var m = $('meta[name="theme-color"]'); if (m) m.setAttribute('content', t === 'dark' ? '#15110f' : '#e11d2e'); },
     set: function (t) { try { localStorage.setItem(Theme.KEY, t); } catch (e) {} Theme.apply(t); Theme.sync(); },
     current: function () { return document.documentElement.getAttribute('data-theme') || 'light'; },
     toggle: function () { Theme.set(Theme.current() === 'dark' ? 'light' : 'dark'); },
@@ -316,7 +316,7 @@
     if (m && m.image) return m.image;
     var key = (m && (m.id + m.emoji)) || 'x';
     if (thumbCache[key]) return thumbCache[key];
-    var c = (m && m.colors) || ['#cfd8d3', '#7c8c85'], e = (m && m.emoji) || '🍽️';
+    var c = (m && m.colors) || ['#d8d1cf', '#8b807d'], e = (m && m.emoji) || '🍽️';
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="g" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="' + c[0] + '"/><stop offset="1" stop-color="' + c[1] + '"/></radialGradient></defs><rect width="400" height="300" fill="url(#g)"/><circle cx="200" cy="150" r="108" fill="rgba(255,255,255,.16)"/><circle cx="200" cy="150" r="84" fill="rgba(255,255,255,.14)"/><text x="200" y="198" font-size="120" text-anchor="middle">' + e + '</text></svg>';
     return (thumbCache[key] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
   }
@@ -400,7 +400,7 @@
       }).join('') + '</ul>';
     }
   };
-  var PALETTE = ['#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#ef4444', '#14b8a6', '#64748b'];
+  var PALETTE = ['#e11d2e', '#f59e0b', '#3b82f6', '#8b5cf6', '#ef4444', '#14b8a6', '#64748b'];
 
   /* ---------- CSV, unduh, cetak ---------- */
   function csvCell(v) { v = v == null ? '' : String(v); if (/^[=+\-@]/.test(v)) v = "'" + v; return /[",\n;]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }

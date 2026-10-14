@@ -16,7 +16,7 @@
   'use strict';
 
   var PREFIX = 'qmo:';
-  var SCHEMA_VERSION = 2;
+  var SCHEMA_VERSION = 3;
   var COLLECTIONS = ['categories', 'menus', 'tables', 'orders', 'transactions', 'promos', 'users'];
   var DOCS = ['settings', 'meta'];
 
@@ -132,7 +132,7 @@
       restaurant: {
         name: 'Ayam Kampung Sambal Merintih',
         tagline: 'Rumah makan ayam kampung & sambal khas Citeureup, Bogor',
-        logo: '',
+        logo: 'assets/icon-192.png',
         cover: '',
         address: 'Jl. Sabilillah, Citeureup, Kecamatan Citeureup, Kabupaten Bogor, Jawa Barat 16810',
         whatsapp: '',
@@ -445,6 +445,7 @@
         if (!r.tagline || r.tagline === 'Citeureup, Bogor') r.tagline = d.restaurant.tagline;
         if (r.whatsapp === '6281234567890') r.whatsapp = '';
         ['rating', 'ratingCount', 'priceRange', 'category'].forEach(function (k) { if (r[k] == null) r[k] = d.restaurant[k]; });
+        if (!r.logo) r.logo = d.restaurant.logo;
         rawWrite('settings', s);
         var tb = adapter.read('tables') || [];
         if (!tb.some(function (t) { return t.code === 'MEJA-23'; })) { tb.push({ id: 'tbl_23', code: 'MEJA-23', name: 'Meja 23', capacity: 6, active: true, createdAt: Date.now() }); rawWrite('tables', tb); }

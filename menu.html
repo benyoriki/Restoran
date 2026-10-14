@@ -6,17 +6,38 @@
   <title>Menu Digital — QR Menu & Order</title>
   <meta name="description" content="Pilih menu dan kirim pesanan langsung dari meja Anda.">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#10b981">
-  <meta property="og:title" content="Menu Digital — QR Menu & Order"><meta property="og:description" content="Pilih menu dan kirim pesanan langsung dari meja Anda."><meta property="og:image" content="og-image.png">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#a30f1a">
+    <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ayam Kampung &amp; Sambal Merintih">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:url" content="https://benyoriki.github.io/Restoran/menu.html">
+  <meta property="og:title" content="🍽️ Menu Digital — Ayam Kampung &amp; Sambal Merintih">
+  <meta property="og:description" content="Lihat daftar menu, harga, dan promo. Pilih makanan favorit lalu kirim pesanan langsung dari meja Anda.">
+  <meta property="og:image" content="https://benyoriki.github.io/Restoran/og-image.jpg">
+  <meta property="og:image:secure_url" content="https://benyoriki.github.io/Restoran/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ayam Kampung &amp; Sambal Merintih — ayam bakar kampung dengan sambal, scan QR dan bayar QRIS">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🍽️ Menu Digital — Ayam Kampung &amp; Sambal Merintih">
+  <meta name="twitter:description" content="Lihat daftar menu, harga, dan promo. Pilih makanan favorit lalu kirim pesanan langsung dari meja Anda.">
+  <meta name="twitter:image" content="https://benyoriki.github.io/Restoran/og-image.jpg">
+  <link rel="canonical" href="https://benyoriki.github.io/Restoran/menu.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Sambal Merintih"><meta name="application-name" content="Sambal Merintih">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script>try{var t=localStorage.getItem('qmo:theme');document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}</script>
+  <link rel="stylesheet" href="splash.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="responsive.css">
 </head>
 <body class="cust-body">
+<div id="splash" aria-hidden="true"><div class="sp-in"><div class="sp-logo"><img src="assets/icon-192.png" alt=""></div><h1>Ayam Kampung &amp; Sambal Merintih</h1><p>Menyiapkan menu untuk Anda…</p><div class="sp-bar"><i></i></div></div></div>
 <noscript><p style="padding:24px;font-family:sans-serif">Aplikasi ini membutuhkan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
 <div id="app" class="cust-app" aria-live="polite">
   <div class="cust-shell"><div class="pad" style="padding-top:24px"><div class="skeleton-wrap"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></div></div>
@@ -30,5 +51,6 @@
 <script src="orders.js"></script>
 <script src="cart.js"></script>
 <script>document.addEventListener('DOMContentLoaded', function () { CustomerMenu.init(); });</script>
+<script src="pwa.js" defer></script>
 </body>
 </html>

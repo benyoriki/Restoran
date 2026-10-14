@@ -414,7 +414,7 @@
           name: c.name, desc: c.desc, categoryId: c.categoryId, price: c.price, promoPrice: c.promoPrice == null ? null : c.promoPrice,
           stock: Math.round(c.stock), minStock: Math.round(c.minStock), available: !!c.available, featured: !!c.featured, active: !!c.active, image: c.image || ''
         });
-        if (isNew) { item.emoji = '🍽️'; item.colors = ['#cfe3d8', '#5f8f78']; }
+        if (isNew) { item.emoji = '🍽️'; item.colors = ['#e2d4d0', '#8d6b61']; }
         Store.saveMenu(item);
         App.toast(isNew ? 'Menu ditambahkan.' : 'Menu diperbarui.');
         done();
